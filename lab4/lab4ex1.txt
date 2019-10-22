@@ -1,0 +1,45 @@
+PRP, PRF
+
+PRF = primeste un mesaj si il transforma intr-un cifru cu o cheie.
+Vrem ca un adversar sa nu stie ca lucreaza cu un prf (ciphertext tre sa para random)
+
+Av(adversar) = |Pr(Exp(0) = 1| - Pr(Exp(1) = 1)|
+                    b = 0           b = 1
+
+Exp(0) = cand ai vorbit cu un PRF
+Exp(1) = cand ai vorbit cu ceva random
+
+---------            ---------
+|       | m={0,1}^n  |       |
+|       |<-----------|       |
+|Challng| c = F(k,m) |Adversr|
+|       |----------->|       |
+|       |            |       |
+---------            ---------
+
+F : K * X -> Y => PRF sigur
+
+Vrem sa vedem ce se intampla daca avem un PRF F1 = F(K,X) || 0
+
+A1(x) {
+    y = F1(x)
+
+    if y(-1) == 0
+        return 1
+
+    return 0
+}
+
+Av(adversar) = |1 - 1/2| = 1/2
+
+F2 = F(k, bitwisecomplement(X))
+
+Say A2 breaks F2 => We can Build B2 like this:
+
+say y = bitwisecomplement(x)
+B2(y) {
+    x = bitwisecomplement(y) 
+    Aresult = A2(x)
+
+    return Aresult
+}
