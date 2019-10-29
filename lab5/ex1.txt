@@ -1,0 +1,9 @@
+Nu trebuie facut brute force dupa cheia 1.
+Daca avem plaintext si ciphertext,
+
+for k2' in ...
+    for k3' in ...:
+        calculam C' = E(k2', P xor k3')
+        k1' = C' xor C
+
+Deci complexitatea e 2^(|k2| * |k3|)
