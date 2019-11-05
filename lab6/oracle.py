@@ -78,12 +78,12 @@ def stringify(numbers):
 if __name__ == "__main__":
     ctext = "f5b376080831f2b262fd204ca865b740c67b5a5456a2653dfee2bb8e7c9b81a8be5a1b57645d3b98f2e191e897e8fcf98ddd2005628243a8315be785c870eecc7c60ba1cf6bd4b7fa6a9e9dbbeabf24fc9f7140791f7d13539082bf590393aa3"
     iv = numberify(IV)
+    ct = ctext.decode('hex')
+    cc = [ct[0:16], ct[16:32], ct[32:48], ct[48:64]]
     ciphertext = numberify(ctext.decode('hex'))
     blocks = blockify(ciphertext)
     cleartext = []
     
-    ct = ctext.decode('hex')
-    cc = [ct[0:16], ct[16:32], ct[32:48], ct[48:64]]
 
     # TODO: implement the CBC-padding attack to find the message corresponding to the above ciphertext
     # Note: you cannot use the key known by the oracle
@@ -91,26 +91,17 @@ if __name__ == "__main__":
 
     for k in range(4):
         r = "radoirazvanbogd"
-        
         buf = ''
-
-        temp = 0
         found = True
 
         for j in range(16):
-            start = 0
-
-            if not found:
-                start = temp + 1
-
             found = False
 
-            for i in range(start, 256):
+            for i in range(0, 256):
                 cs = r[:(15 - j)] + chr(i) + strxor(buf, chr(j + 1) * len(buf)) + cc[k]
 
                 if check_cbcpad(cs, IV) == 1:
                     found = True
-                    temp = i
                     buf = strxor(chr(i), chr(j + 1)) + buf
                     break
 
