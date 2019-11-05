@@ -211,8 +211,8 @@ def find_key3(plaintext, ciphertext):
 
   for i in range(0,0xff):
     for j in range(0,0xff):
-      k34 = bitxor(hex2bin(ciphertext), byte2bin(i) + byte2bin(j))
-      p = permute_inv4(k34)
+      temp = bitxor(hex2bin(ciphertext), byte2bin(i) + byte2bin(j))
+      p = permute_inv4(temp)
 
       s1 = rsbox[int(p[0:8], 2)]
       s2 = rsbox[int(p[8:16], 2)]
